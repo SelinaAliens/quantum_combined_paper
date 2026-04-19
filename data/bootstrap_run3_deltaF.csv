@@ -1,0 +1,7 @@
+quantity,method,estimate,SE,ci_lo_95,ci_hi_95,excludes_zero
+F_paired_aggregate,asymptotic_quasi_poisson,0.506180,0.011185,0.484258,0.528103,yes
+F_control_aggregate,asymptotic_quasi_poisson,0.563668,0.012455,0.539256,0.588080,yes
+delta_F_aggregate,asymptotic_quasi_poisson,-0.057488,0.016740,-0.090299,-0.024676,yes
+delta_F_per_round,asymptotic_quasi_poisson,-0.008923,0.006865,-0.022379,0.004532,no
+delta_F_aggregate,parametric_bootstrap_B10000,-0.064233,0.016902,-0.097682,-0.031009,yes
+delta_F_per_round,parametric_bootstrap_B10000,-0.008657,0.006477,-0.021390,0.004074,no
