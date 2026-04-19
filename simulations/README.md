@@ -15,8 +15,8 @@ Two scripts:
 
 ```bash
 # Clone this repo
-git clone https://github.com/selinaserephina-star/merkabit_quantum_paper_2026
-cd merkabit_quantum_paper_2026/simulations
+git clone https://github.com/SelinaAliens/quantum_combined_hardware
+cd quantum_combined_hardware/simulations
 
 # Run the seed sweep (numpy required)
 python seed_sweep_driver.py

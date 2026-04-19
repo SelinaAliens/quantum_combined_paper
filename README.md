@@ -14,12 +14,12 @@ It does **not** duplicate code or data that already lives in the two source repo
 ## Contents
 
 ```
-merkabit_quantum_paper_2026/
+quantum_combined_hardware/
 ├── README.md                       (this file — wayfinding)
 ├── LICENSE                         (MIT)
 ├── PAPER_GUIDE.md                  (paper section → source-repo file map)
 ├── paper/
-│   └── Paper_Quantum_Draft_v9.docx (the manuscript)
+│   └── Paper_Quantum_Draft_v11.docx (the manuscript)
 ├── data/
 │   ├── README.md                       (CSV schemas and provenance)
 │   ├── seed_dispersion_30seeds.csv     (30-seed Monte Carlo dispersion, §4.4)
@@ -56,7 +56,7 @@ The paper §4 (topology Monte Carlo), §5 (pre-registered test), and §3.1's poi
 
 ## What this repo adds that the source repos don't
 
-1. **The manuscript** (`paper/Paper_Quantum_Draft_v9.docx`) — the consolidation paper itself, in submission-ready form.
+1. **The manuscript** (`paper/Paper_Quantum_Draft_v11.docx`) — the consolidation paper itself, in submission-ready form.
 
 2. **The seed-dispersion table** (`data/seed_dispersion_30seeds.csv`) — 30 PRNG seeds × 4 cells × {paired, control} = 120 rows showing that the headline §4.4 result (4×4 square cell at τ = 5, ε = 0.10) gives F = 0.370 ± 0.026 across seeds, not the single-seed F = 0.286 originally reported in Paper 26 [15]. This data table is generated specifically for §4.4 of the consolidation paper and does not exist in either source repo.
 
@@ -75,14 +75,14 @@ Not reproducible without IBM Quantum Runtime access. Raw counts and job IDs are 
 
 ### Topology Monte Carlo (§4) and seed-dispersion (§4.4)
 ```bash
-git clone https://github.com/selinaserephina-star/merkabit_quantum_paper_2026
-cd merkabit_quantum_paper_2026/simulations
+git clone https://github.com/SelinaAliens/quantum_combined_hardware
+cd quantum_combined_hardware/simulations
 python seed_sweep_driver.py    # ~5 min, reproduces data/seed_dispersion_30seeds.csv
 ```
 
 ### Angle-table perturbation control (§6.1)
 ```bash
-cd merkabit_quantum_paper_2026/simulations
+cd quantum_combined_hardware/simulations
 python angle_perturbation_control.py    # ~30 sec, reproduces data/angle_perturbation_1000.csv
 ```
 The script first prints the merkabit ideal observables (sanity-check against paper §3.2 π-lock and §3.4 P2 stroboscopic), then runs 3,000 multiplier-perturbation trials. See `simulations/README.md` and `data/README.md` for details.
@@ -96,7 +96,7 @@ Not reproducible against hardware (early-access pending). Cirq scripts that *wil
 
 Until a Zenodo DOI is minted at submission, cite as:
 
-> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Cross-Architecture Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors.* GitHub: `selinaserephina-star/merkabit_quantum_paper_2026` (April 2026).
+> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Cross-Architecture Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors.* GitHub: `SelinaAliens/quantum_combined_hardware` (April 2026).
 
 A Zenodo DOI snapshot of this repo (and the two source repos at submission-time SHAs) will be minted when the paper is submitted to Quantum.
 
