@@ -1,6 +1,6 @@
 # Paper Guide — Section-by-Section File Map
 
-Maps every section of `paper/Paper_Quantum_Draft_v5.docx` to the source files that produced its claims, across all three repositories:
+Maps every section of `paper/Paper_Quantum_Draft_v6.docx` to the source files that produced its claims, across all three repositories:
 
 - **[this]** = this companion repo (`merkabit_quantum_paper_2026`)
 - **[ibm]** = [`SelinaAliens/merkabit_hardware_test`](https://github.com/SelinaAliens/merkabit_hardware_test) (IBM hardware track)

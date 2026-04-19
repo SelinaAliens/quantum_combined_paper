@@ -19,18 +19,20 @@ merkabit_quantum_paper_2026/
 ├── LICENSE                         (MIT)
 ├── PAPER_GUIDE.md                  (paper section → source-repo file map)
 ├── paper/
-│   └── Paper_Quantum_Draft_v5.docx (the manuscript)
+│   └── Paper_Quantum_Draft_v6.docx (the manuscript)
 ├── data/
-│   ├── README.md                   (CSV schema and provenance)
-│   └── seed_dispersion_30seeds.csv (30-seed Monte Carlo dispersion, §4.4)
+│   ├── README.md                       (CSV schemas and provenance)
+│   ├── seed_dispersion_30seeds.csv     (30-seed Monte Carlo dispersion, §4.4)
+│   └── angle_perturbation_1000.csv     (3,000-trial angle-table perturbation control, §6.1)
 ├── simulations/
-│   ├── README.md                   (how to reproduce §4.4 from scratch)
-│   ├── sim_scaling_comparison.py   (frozen copy of willow_hardware_merkabit/simulations/sim_scaling_comparison.py)
-│   └── seed_sweep_driver.py        (the wrapper that produced the CSV)
+│   ├── README.md                           (how to reproduce §4.4 and §6.1 from scratch)
+│   ├── sim_scaling_comparison.py           (frozen copy of willow_hardware_merkabit/simulations/sim_scaling_comparison.py)
+│   ├── seed_sweep_driver.py                (driver that produced seed_dispersion_30seeds.csv)
+│   └── angle_perturbation_control.py       (dual-spinor unitary + angle-table perturbation sweep)
 └── .gitignore
 ```
 
-Total size: < 100 kB. Two scripts, one CSV, one docx, three READMEs, one license.
+Total size: < 600 kB. Three scripts, two CSVs, one docx, three READMEs, one license.
 
 ---
 
@@ -54,13 +56,15 @@ The paper §4 (topology Monte Carlo), §5 (pre-registered test), and §3.1's poi
 
 ## What this repo adds that the source repos don't
 
-1. **The manuscript** (`paper/Paper_Quantum_Draft_v5.docx`) — the consolidation paper itself, in submission-ready form.
+1. **The manuscript** (`paper/Paper_Quantum_Draft_v6.docx`) — the consolidation paper itself, in submission-ready form.
 
 2. **The seed-dispersion table** (`data/seed_dispersion_30seeds.csv`) — 30 PRNG seeds × 4 cells × {paired, control} = 120 rows showing that the headline §4.4 result (4×4 square cell at τ = 5, ε = 0.10) gives F = 0.370 ± 0.026 across seeds, not the single-seed F = 0.286 originally reported in Paper 26 [15]. This data table is generated specifically for §4.4 of the consolidation paper and does not exist in either source repo.
 
 3. **The driver that produced the table** (`simulations/seed_sweep_driver.py`) — wraps `sim_scaling_comparison.py` and runs it across seeds 1..30. Reproducible, ~5 minutes wall time on a laptop.
 
 4. **A frozen copy of `sim_scaling_comparison.py`** — the simulation script that produced the seed-dispersion data. Frozen here at submission-time SHA so the paper's numerical claims remain reproducible even if the live source repo evolves. The live version is in `willow_hardware_merkabit/simulations/`.
+
+5. **The angle-table perturbation control** (`simulations/angle_perturbation_control.py` and `data/angle_perturbation_1000.csv`) — a self-contained dual-spinor Floquet unitary in numpy that reproduces every paper-quoted ideal observable (§3.2 π-lock, §3.4 P2 stroboscopic, Table 5) to four-digit agreement, then perturbs the 15-parameter Table 1a multipliers across 3,000 trials to test whether the merkabit angle table is required to produce the predicted observables. Generated specifically for §6.1 of the consolidation paper. **Headline finding**: the high-recurrence peaks (P at n = 37 ≈ 0.92 and n = 39 ≈ 0.91) are strongly discriminative (merkabit at 86th–94th percentile of perturbed distributions); the low-recurrence observables (P at n = 13, π-lock) are typical for similar-magnitude tables. The Willow run's discrimination weight concentrates on Table 7 observable 5.
 
 ---
 
@@ -75,7 +79,13 @@ git clone https://github.com/selinaserephina-star/merkabit_quantum_paper_2026
 cd merkabit_quantum_paper_2026/simulations
 python seed_sweep_driver.py    # ~5 min, reproduces data/seed_dispersion_30seeds.csv
 ```
-See `simulations/README.md` for details.
+
+### Angle-table perturbation control (§6.1)
+```bash
+cd merkabit_quantum_paper_2026/simulations
+python angle_perturbation_control.py    # ~30 sec, reproduces data/angle_perturbation_1000.csv
+```
+The script first prints the merkabit ideal observables (sanity-check against paper §3.2 π-lock and §3.4 P2 stroboscopic), then runs 3,000 multiplier-perturbation trials. See `simulations/README.md` and `data/README.md` for details.
 
 ### Willow Cirq predictions (§5)
 Not reproducible against hardware (early-access pending). Cirq scripts that *will* run on Willow are at [`willow_hardware_merkabit/experiments/`](https://github.com/SelinaAliens/willow_hardware_merkabit/tree/main/experiments) (P1b, P2, P4, P5).
