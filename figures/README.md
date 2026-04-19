@@ -27,14 +27,12 @@ cd figures/
 for fig in fig*.py; do python "$fig"; done
 ```
 
-## Figures not yet generated
+## All six figures now generated
 
-| Figure | Status |
-|---|---|
-| `fig1_p_gate_decomposition` | Schematic visual abstract: P(φ) = Rz(+φ) ⊗ Rz(−φ) → IBM virtual-Z (depth 6) vs Cirq PhXZ (depth 2). Best done in a vector tool (Inkscape, draw.io) or via matplotlib boxes/arrows. |
-| `fig6_prereg_scorecard` | Visual status grid: 5 IBM observables ✓ retired (Paper 24/25/26) + 8 Willow predictions ⏳ pending. Could be a matplotlib gridded text plot or a styled Word table. |
-
-These are stylistic schematics rather than data-driven plots; the user has not yet specified visual style preferences.
+| File | Subject | Paper section |
+|---|---|---|
+| `fig1_p_gate_decomposition.{png,pdf}` | Visual abstract: P(φ) = Rz(+φ) ⊗ Rz(−φ) compiles to two virtual-Z frame changes on IBM (depth 6) and to one PhXZ per qubit on Google Willow (depth 2 independent of n). Both architectures: zero overhead. | §2.2, §2.3 |
+| `fig6_prereg_scorecard.{png,pdf}` | Two-column scorecard: left = 5 IBM Appendix N predictions retired on hardware April 6–12, 2026 (Base Paper [16] v4 deposited 2026-03-09); right = 8 Willow predictions pending hardware (PREDICTION.md SHAs 5bbfdb6f and 745f653f, both before any access). Observable 8 highlighted as load-bearing per §6.2. | §3.5, §5, §5.3 |
 
 ## Style choices
 
