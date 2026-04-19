@@ -19,7 +19,7 @@ quantum_combined_hardware/
 ├── LICENSE                         (MIT)
 ├── PAPER_GUIDE.md                  (paper section → source-repo file map)
 ├── paper/
-│   └── Paper_Quantum_Draft_v11.docx (the manuscript)
+│   └── README.md                       (manuscript pending submission; arXiv / DOI link will be added on posting)
 ├── data/
 │   ├── README.md                       (CSV schemas and provenance)
 │   ├── seed_dispersion_30seeds.csv     (30-seed Monte Carlo dispersion, §4.4)
@@ -32,7 +32,7 @@ quantum_combined_hardware/
 └── .gitignore
 ```
 
-Total size: < 600 kB. Three scripts, two CSVs, one docx, three READMEs, one license.
+Total size: < 600 kB. Three scripts, two CSVs, four READMEs (top-level, paper, data, simulations), one license. The manuscript itself is **pending submission** — see `paper/README.md`.
 
 ---
 
@@ -56,7 +56,7 @@ The paper §4 (topology Monte Carlo), §5 (pre-registered test), and §3.1's poi
 
 ## What this repo adds that the source repos don't
 
-1. **The manuscript** (`paper/Paper_Quantum_Draft_v11.docx`) — the consolidation paper itself, in submission-ready form.
+1. **A pointer to the manuscript** (`paper/README.md`) — the consolidation paper itself is **pending submission**; the arXiv ID and Zenodo DOI will be added to `paper/README.md` once assigned. The manuscript is not yet posted in this repository.
 
 2. **The seed-dispersion table** (`data/seed_dispersion_30seeds.csv`) — 30 PRNG seeds × 4 cells × {paired, control} = 120 rows showing that the headline §4.4 result (4×4 square cell at τ = 5, ε = 0.10) gives F = 0.370 ± 0.026 across seeds, not the single-seed F = 0.286 originally reported in Paper 26 [15]. This data table is generated specifically for §4.4 of the consolidation paper and does not exist in either source repo.
 
