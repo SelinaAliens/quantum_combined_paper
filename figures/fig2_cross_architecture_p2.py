@@ -76,23 +76,21 @@ ys = [KINGSTON[n] for n in xs]
 ax.plot(xs, ys, "D", color="#EE6677", markersize=7, label="ibm_kingston (Heron r2)",
         zorder=5, markeredgecolor="white", markeredgewidth=0.8)
 
-# Highlight key step counts
+# Highlight key step counts. Coordinates chosen by hand to avoid label overlap.
 key_features = [
-    (13, P_ideal[13], "local min", "below"),
-    (27, P_ideal[27], "local min", "below"),
-    (37, P_ideal[37], "n=37 peak (Kingston: 99.99% fidelity)", "above"),
-    (39, P_ideal[39], "n=39 peak\n(Table 7 obs 5, 8)", "above"),
-    (41, P_ideal[41], "sharp drop", "below"),
+    # (n, label, xytext, ha)
+    (13, "n=13\nlocal min",            (8,  0.45),  "center"),
+    (27, "n=27\nlocal min",            (22, 0.45),  "center"),
+    (37, "n=37 peak\n(Kingston: 99.99%)", (32, 0.32),  "center"),
+    (39, "n=39 peak\n(Table 7\nobs 5, 8)", (50, 0.55),  "center"),
+    (41, "sharp drop",                 (45, 0.20),  "center"),
 ]
-for n, p_ideal, label, where in key_features:
-    if where == "above":
-        ax.annotate(label, xy=(n, p_ideal), xytext=(n, p_ideal + 0.10),
-                    ha="center", fontsize=8.5, color="#222",
-                    arrowprops=dict(arrowstyle="-", color="#888", lw=0.7))
-    else:
-        ax.annotate(label, xy=(n, p_ideal), xytext=(n, p_ideal - 0.13),
-                    ha="center", fontsize=8.5, color="#222",
-                    arrowprops=dict(arrowstyle="-", color="#888", lw=0.7))
+for n, label, xytext, ha in key_features:
+    p_ideal_n = P_ideal[n]
+    ax.annotate(label, xy=(n, p_ideal_n), xytext=xytext,
+                ha=ha, fontsize=8.5, color="#222",
+                arrowprops=dict(arrowstyle="-", color="#888", lw=0.7,
+                                connectionstyle="arc3,rad=0"))
 
 # Floquet period markers
 T = 12
