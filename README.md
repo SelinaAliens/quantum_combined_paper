@@ -126,11 +126,13 @@ Not reproducible against hardware (early-access pending). Cirq scripts that *wil
 
 ## Citation
 
-Until a Zenodo DOI is minted at submission, cite as:
+**Zenodo DOI:** [10.5281/zenodo.19663025](https://doi.org/10.5281/zenodo.19663025) (companion repo snapshot, tag `v1.0-submission`).
+
+Citation:
 
 > Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* GitHub: `SelinaAliens/quantum_combined_paper` (April 2026).
 
-A Zenodo DOI snapshot of this repo (and the two source repos at submission-time SHAs) will be minted when the paper is submitted to Quantum.
+**Zenodo DOI:** [10.5281/zenodo.19663025](https://doi.org/10.5281/zenodo.19663025) — companion repo snapshot at SHA `9c56153` (tag `v1.0-submission`). Use this DOI as the canonical citation for the supplementary code and data.
 
 ---
 

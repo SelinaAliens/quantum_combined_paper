@@ -1,25 +1,27 @@
 # Manuscript
 
-The consolidation paper *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test* (Stenberg & Hetland, 2026) — **submission candidate v19** — is feature-complete and undergoing final author review prior to journal submission. The manuscript is held privately on the authors' workstations during this phase; the public copy of this repository (`SelinaAliens/quantum_combined_paper`) hosts all supporting code, data, and figures.
+The consolidation paper *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test* (Stenberg & Hetland, 2026) — **submission candidate v20** — is feature-complete and undergoing final author review prior to journal submission. The manuscript is held privately on the authors' workstations during this phase; the public copy of this repository (`SelinaAliens/quantum_combined_paper`) hosts all supporting code, data, and figures.
 
 ## Submission status
 
-- **Submission candidate:** `Paper_Quantum_Draft_v19.docx` (held privately; not posted to either repository until journal acceptance)
+- **Submission candidate:** `Paper_Quantum_Draft_v20.docx` (held privately; not posted to either repository until journal acceptance)
 - **Target venue:** Quantum
 - **Pre-registration anchors (commit-verifiable, public):**
   - IBM-side: Base Paper Zenodo deposit `10.5281/zenodo.18925475 v4` (deposited 2026-03-09, predates IBM hardware sessions of 6–12 April 2026)
   - Willow-side: `willow_hardware_merkabit/PREDICTION.md` SHAs `5bbfdb6f` (2026-04-12) and `745f653f` (2026-04-15) — both prior to any Google hardware access
+  - Companion code & data archive: **Zenodo DOI `10.5281/zenodo.19663025`** (snapshot of `selinaserephina-star/merkabit_quantum_paper_2026` at SHA `9c56153`, tag `v1.0-submission`; identical-content mirror at `SelinaAliens/quantum_combined_paper`)
 - **Eight pre-registered Willow observables:** Table 9 of the manuscript, with obs 8 (P(n=39) ≥ 0.85) as the load-bearing falsifier of angle-table specialness identified by §6.2
 
 ## Where to find the paper after submission
 
 - **arXiv:** the preprint will be posted to quant-ph and linked here once an arXiv ID is assigned.
-- **Zenodo DOI:** a citable Zenodo snapshot of this repository (including the manuscript) will be minted at submission and linked here.
+- **Zenodo DOI (companion repo, code & data):** [10.5281/zenodo.19663025](https://doi.org/10.5281/zenodo.19663025) — already minted (tag `v1.0-submission`, SHA `9c56153`).
+- **Zenodo DOI (manuscript):** a separate Zenodo deposit for the manuscript PDF will be minted after the arXiv version is live, and linked here.
 - **Journal version:** when accepted, the journal-formatted version will be linked here alongside the accepted-author-manuscript.
 
 ## Iteration history (private repo only — not in public mirror)
 
-The manuscript went through nine major revision cycles between v11 and v19:
+The manuscript went through ten major revision cycles between v11 and v20:
 
 - **v11** — author baseline at 2026-04-19. Included §3.3 "directional Fano gap at τ=5" framed as the central hardware result (ΔF = −0.058, no error bar).
 - **v12** — added §3.3 per-round Fano forensics paragraph + new §8 bullets (per-round CSV, three τ-sweep simulators). Reframed the τ direction-flip as session-dependent ρ inflation rather than a protocol observable.
@@ -30,8 +32,9 @@ The manuscript went through nine major revision cycles between v11 and v19:
 - **v17** — inlined Figure S1 (`figS_per_round_fano.png`) into the §3.3 prose right after ¶C (size 4.5 × 4.5 inches, centered); added §8 bullet listing submission-time commit SHAs (`6b2ca4d`, `9c6eb5a`, `235f423`, `0c71d64`).
 - **v18** — fixed stale `Figure S1` body cross-reference in Figure 3's caption to read `Figure 2` after the manual figure renumber (S1 became Figure 2; subsequent figures shifted +1).
 - **v19** — updated GitHub URLs in §8 to point at the new public mirror `SelinaAliens/quantum_combined_paper` (replaces the earlier `quantum_combined_hardware` placeholder).
+- **v20** — baked the Zenodo DOI `10.5281/zenodo.19663025` into §8 (replaces the placeholder "will be minted at submission" promise with the actual DOI).
 
-The intermediate `v11_BACKUP_before_3.3_revision.docx` through `v18.docx` files are held privately. Only v19 is the submission candidate; the earlier versions are kept for revision history and audit trail.
+The intermediate `v11_BACKUP_before_3.3_revision.docx` through `v18.docx` files are held privately. Only v20 is the submission candidate; the earlier versions are kept for revision history and audit trail.
 
 ## What's in this repository
 
@@ -59,4 +62,4 @@ The pre-registered Cirq protocols for the Google Willow run are in the [Willow t
 
 ## Citation (interim, until arXiv / DOI assigned)
 
-> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* Submission candidate v19, 2026. Code and supplementary data: `https://github.com/SelinaAliens/quantum_combined_paper`.
+> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* Submission candidate v20, 2026. Code and supplementary data: `https://github.com/SelinaAliens/quantum_combined_paper`.
