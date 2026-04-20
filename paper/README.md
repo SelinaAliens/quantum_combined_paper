@@ -1,10 +1,10 @@
 # Manuscript
 
-The consolidation paper *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test* (Stenberg & Hetland, 2026) — **submission candidate v17** — is feature-complete and undergoing final author review prior to journal submission. The manuscript is held privately on the authors' workstations during this phase; the public copy of this repository (`SelinaAliens/quantum_combined_hardware`) hosts all supporting code, data, and figures.
+The consolidation paper *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test* (Stenberg & Hetland, 2026) — **submission candidate v19** — is feature-complete and undergoing final author review prior to journal submission. The manuscript is held privately on the authors' workstations during this phase; the public copy of this repository (`SelinaAliens/quantum_combined_paper`) hosts all supporting code, data, and figures.
 
 ## Submission status
 
-- **Submission candidate:** `Paper_Quantum_Draft_v17.docx` (held privately; not posted to either repository until journal acceptance)
+- **Submission candidate:** `Paper_Quantum_Draft_v19.docx` (held privately; not posted to either repository until journal acceptance)
 - **Target venue:** Quantum
 - **Pre-registration anchors (commit-verifiable, public):**
   - IBM-side: Base Paper Zenodo deposit `10.5281/zenodo.18925475 v4` (deposited 2026-03-09, predates IBM hardware sessions of 6–12 April 2026)
@@ -19,17 +19,19 @@ The consolidation paper *Native Asymmetric-Phase Gates Produce Sub-Poissonian Sy
 
 ## Iteration history (private repo only — not in public mirror)
 
-The manuscript went through several major revision cycles between v11 and v17:
+The manuscript went through nine major revision cycles between v11 and v19:
 
 - **v11** — author baseline at 2026-04-19. Included §3.3 "directional Fano gap at τ=5" framed as the central hardware result (ΔF = −0.058, no error bar).
 - **v12** — added §3.3 per-round Fano forensics paragraph + new §8 bullets (per-round CSV, three τ-sweep simulators). Reframed the τ direction-flip as session-dependent ρ inflation rather than a protocol observable.
-- **v13** — added Tier 2 author-checklist edits: title softening (option 2), §3.3 + abstract bootstrap CI on ΔF, §4.4 24σ disambiguation, §5.3 interpretation matrix paragraph, §6.1 classical MC caveat.
+- **v13** — Tier-2 author-checklist edits: title softening (option 2), §3.3 + abstract bootstrap CI on ΔF, §4.4 24σ disambiguation, §5.3 interpretation matrix paragraph, §6.1 classical MC caveat.
 - **v14** — promoted the 7-node pentachoric error-injection result (F = 0.055 ± 0.010 centre, 0.204 ± 0.029 periphery, det 0.987) to its own §3.6 subsection + a new §1 (v) bullet ("five complementary ways" instead of four).
 - **v15** — ZZ-on/off comparison sim (`tau_sweep_lindblad_zz_onoff.py`, 40 configurations × 1500 trajectories, 46 min runtime) replaces the over-strong "coherent ZZ is the mechanism" claim with the corrected "ZZ amplifies but is not necessary" framing. Restored the τ=3 explanation sentence accidentally trimmed in v14.
 - **v16** — split the dense §3.3 forensics paragraph into three (¶A session forensics, ¶B three simulator configurations, ¶C what the simulators show) with a bolded run-in header on ¶A.
 - **v17** — inlined Figure S1 (`figS_per_round_fano.png`) into the §3.3 prose right after ¶C (size 4.5 × 4.5 inches, centered); added §8 bullet listing submission-time commit SHAs (`6b2ca4d`, `9c6eb5a`, `235f423`, `0c71d64`).
+- **v18** — fixed stale `Figure S1` body cross-reference in Figure 3's caption to read `Figure 2` after the manual figure renumber (S1 became Figure 2; subsequent figures shifted +1).
+- **v19** — updated GitHub URLs in §8 to point at the new public mirror `SelinaAliens/quantum_combined_paper` (replaces the earlier `quantum_combined_hardware` placeholder).
 
-The intermediate `v11_BACKUP_before_3.3_revision.docx` through `v17.docx` files are held privately. Only v17 is the submission candidate; the earlier versions are kept for revision history and audit trail.
+The intermediate `v11_BACKUP_before_3.3_revision.docx` through `v18.docx` files are held privately. Only v19 is the submission candidate; the earlier versions are kept for revision history and audit trail.
 
 ## What's in this repository
 
@@ -57,4 +59,4 @@ The pre-registered Cirq protocols for the Google Willow run are in the [Willow t
 
 ## Citation (interim, until arXiv / DOI assigned)
 
-> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* Submission candidate v17, 2026. Code and supplementary data: `https://github.com/SelinaAliens/quantum_combined_hardware`.
+> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* Submission candidate v19, 2026. Code and supplementary data: `https://github.com/SelinaAliens/quantum_combined_paper`.

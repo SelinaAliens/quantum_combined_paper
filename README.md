@@ -14,7 +14,7 @@ It does **not** duplicate code or data that already lives in the two source repo
 ## Contents
 
 ```
-quantum_combined_hardware/
+quantum_combined_paper/
 ├── README.md                                    (this file — wayfinding)
 ├── LICENSE                                      (MIT)
 ├── PAPER_GUIDE.md                               (paper section → source-repo file map)
@@ -91,14 +91,14 @@ Not reproducible without IBM Quantum Runtime access. Raw counts and job IDs are 
 
 ### Topology Monte Carlo (§4) and seed-dispersion (§4.4)
 ```bash
-git clone https://github.com/SelinaAliens/quantum_combined_hardware
-cd quantum_combined_hardware/simulations
+git clone https://github.com/SelinaAliens/quantum_combined_paper
+cd quantum_combined_paper/simulations
 python seed_sweep_driver.py    # ~5 min, reproduces data/seed_dispersion_30seeds.csv
 ```
 
 ### Angle-table perturbation control (§6.2)
 ```bash
-cd quantum_combined_hardware/simulations
+cd quantum_combined_paper/simulations
 python angle_perturbation_control.py    # ~30 sec, reproduces data/angle_perturbation_1000.csv
 ```
 The script first prints the merkabit ideal observables (sanity-check against paper §3.2 π-lock and §3.4 P2 stroboscopic), then runs 3,000 multiplier-perturbation trials. See `simulations/README.md` and `data/README.md` for details.
@@ -106,14 +106,14 @@ The script first prints the merkabit ideal observables (sanity-check against pap
 ### Per-round Fano forensics (§3.3)
 ```bash
 # Requires a local clone of merkabit_hardware_test (default path: C:/Users/selin/merkabit_hardware_test)
-cd quantum_combined_hardware/simulations
+cd quantum_combined_paper/simulations
 python per_round_fano_extractor.py --hw-repo /path/to/merkabit_hardware_test
 # ~3 sec, reproduces data/per_round_fano_summary.csv and figures/figS_per_round_fano.{png,pdf}
 ```
 
 ### τ-sweep simulations (§3.3 supporting)
 ```bash
-cd quantum_combined_hardware/simulations
+cd quantum_combined_paper/simulations
 python tau_sweep_3node_triangle.py      # ~60 sec, classical pentachoric MC
 python tau_sweep_noisy_qiskit.py        # ~3 min, Qiskit Aer + FakeSherbrooke (Eagle r3) noise
 python tau_sweep_lindblad_triangle.py   # ~25 min, quantum-trajectory MC + IBM Brisbane noise
@@ -128,7 +128,7 @@ Not reproducible against hardware (early-access pending). Cirq scripts that *wil
 
 Until a Zenodo DOI is minted at submission, cite as:
 
-> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Cross-Architecture Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors.* GitHub: `SelinaAliens/quantum_combined_hardware` (April 2026).
+> Stenberg, S. & Hetland, T. H. *Native Asymmetric-Phase Gates Produce Sub-Poissonian Syndrome Statistics on Superconducting Quantum Processors: Cross-Architecture IBM Evidence and a Pre-Registered Willow Test.* GitHub: `SelinaAliens/quantum_combined_paper` (April 2026).
 
 A Zenodo DOI snapshot of this repo (and the two source repos at submission-time SHAs) will be minted when the paper is submitted to Quantum.
 

@@ -15,8 +15,8 @@ Two scripts:
 
 ```bash
 # Clone this repo
-git clone https://github.com/SelinaAliens/quantum_combined_hardware
-cd quantum_combined_hardware/simulations
+git clone https://github.com/SelinaAliens/quantum_combined_paper
+cd quantum_combined_paper/simulations
 
 # Run the seed sweep (numpy required)
 python seed_sweep_driver.py
