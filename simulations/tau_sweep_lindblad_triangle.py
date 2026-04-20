@@ -244,113 +244,115 @@ def run_config(cell, nm, base_assignment, tau, paired,
 
 
 # ---------------------------------------------------------------------------
-# Main sweep
+# Main sweep (guarded so the module can be imported by other scripts without
+# kicking off the full 25-minute sweep)
 # ---------------------------------------------------------------------------
-SHOTS_PER_CONFIG = 1500     # quantum trajectories per (tau, paired, seed)
-SEEDS            = list(range(1, 6))    # 5 outer seeds for trajectory variance
-TAU_VALUES       = [1, 2, 3, 4, 5, 6, 7]
-COHERENT_NOISE   = 0.05 * STEP_PHASE   # coherent control noise (matches T1 test)
+if __name__ == "__main__":
+    SHOTS_PER_CONFIG = 1500     # quantum trajectories per (tau, paired, seed)
+    SEEDS            = list(range(1, 6))    # 5 outer seeds for trajectory variance
+    TAU_VALUES       = [1, 2, 3, 4, 5, 6, 7]
+    COHERENT_NOISE   = 0.05 * STEP_PHASE   # coherent control noise (matches T1 test)
 
-HARDWARE = {
-    1: {"paired": 0.654, "control": 0.613},
-    3: {"paired": 0.871, "control": 0.600},
-    5: {"paired": 0.506, "control": 0.564},
-}
+    HARDWARE = {
+        1: {"paired": 0.654, "control": 0.613},
+        3: {"paired": 0.871, "control": 0.600},
+        5: {"paired": 0.506, "control": 0.564},
+    }
 
-OUT_CSV = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "..", "data", "tau_sweep_lindblad_triangle.csv"
-)
+    OUT_CSV = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "..", "data", "tau_sweep_lindblad_triangle.csv"
+    )
 
-# Build cell + noise model
-cell = TriangleCell()
-nm = MultiMerkabitNoiseModel(
-    cell, name="IBM Brisbane (triangle adaptation)"
-)
+    # Build cell + noise model
+    cell = TriangleCell()
+    nm = MultiMerkabitNoiseModel(
+        cell, name="IBM Brisbane (triangle adaptation)"
+    )
 
-# Pick a fixed base assignment (must satisfy adjacent-different constraint).
-# Triangle has 3 nodes all pairwise adjacent, so all 3 bases must differ.
-base_assignment = [0, 1, 2]   # S, R, T at nodes 0, 1, 2
-# Verify
-for i, j in cell.edges:
-    assert base_assignment[i] != base_assignment[j], "invalid base assignment"
+    # Pick a fixed base assignment (must satisfy adjacent-different constraint).
+    # Triangle has 3 nodes all pairwise adjacent, so all 3 bases must differ.
+    base_assignment = [0, 1, 2]   # S, R, T at nodes 0, 1, 2
+    # Verify
+    for i, j in cell.edges:
+        assert base_assignment[i] != base_assignment[j], "invalid base assignment"
 
-print("=" * 78)
-print("Quantum-trajectory MC tau-sweep on the 3-node triangle")
-print(f"Noise model    : {nm.name}")
-print(f"  T1/T2 centre : {nm.node_params[0]['T1_us']:.0f}us / {nm.node_params[0]['T2_us']:.0f}us")
-print(f"  T1/T2 periph : {nm.node_params[1]['T1_us']:.0f}us / {nm.node_params[1]['T2_us']:.0f}us")
-print(f"  ZZ intra     : {nm.zz_intra_phase:.4f} rad/gate (30 kHz)")
-print(f"  ZZ inter     : {nm.zz_inter_phase:.4f} rad/gate (8 kHz)")
-print(f"  Burst prob   : {nm.burst_prob}")
-print(f"Trajectories   : {SHOTS_PER_CONFIG} per (tau, paired, seed)")
-print(f"Outer seeds    : {len(SEEDS)}")
-print(f"Tau sweep      : {TAU_VALUES}")
-print(f"Base assignment: {[GATES[a] for a in base_assignment]}  "
-      f"chirality={cell.chirality}")
-print("=" * 78)
+    print("=" * 78)
+    print("Quantum-trajectory MC tau-sweep on the 3-node triangle")
+    print(f"Noise model    : {nm.name}")
+    print(f"  T1/T2 centre : {nm.node_params[0]['T1_us']:.0f}us / {nm.node_params[0]['T2_us']:.0f}us")
+    print(f"  T1/T2 periph : {nm.node_params[1]['T1_us']:.0f}us / {nm.node_params[1]['T2_us']:.0f}us")
+    print(f"  ZZ intra     : {nm.zz_intra_phase:.4f} rad/gate (30 kHz)")
+    print(f"  ZZ inter     : {nm.zz_inter_phase:.4f} rad/gate (8 kHz)")
+    print(f"  Burst prob   : {nm.burst_prob}")
+    print(f"Trajectories   : {SHOTS_PER_CONFIG} per (tau, paired, seed)")
+    print(f"Outer seeds    : {len(SEEDS)}")
+    print(f"Tau sweep      : {TAU_VALUES}")
+    print(f"Base assignment: {[GATES[a] for a in base_assignment]}  "
+          f"chirality={cell.chirality}")
+    print("=" * 78)
 
-t0 = time.time()
-rows = []
-print(f"\n{'tau':>3} | {'paired':>6} | {'seed':>4} | {'F':>8} | "
-      f"{'<w>':>6} | {'det':>6} | {'sec':>5}")
-print("-" * 56)
+    t0 = time.time()
+    rows = []
+    print(f"\n{'tau':>3} | {'paired':>6} | {'seed':>4} | {'F':>8} | "
+          f"{'<w>':>6} | {'det':>6} | {'sec':>5}")
+    print("-" * 56)
 
-for tau in TAU_VALUES:
-    for paired in [True, False]:
-        for seed in SEEDS:
-            t1 = time.time()
-            r = run_config(cell, nm, base_assignment, tau, paired,
-                           n_traj=SHOTS_PER_CONFIG, base_seed=seed,
-                           coherent_noise=COHERENT_NOISE)
-            dt = time.time() - t1
-            rows.append({
-                "tau": tau, "paired": int(paired), "seed": seed,
-                "fano": r["fano"], "mean_weight": r["mean_weight"],
-                "detection": r["detection_rate"], "n_traj": r["n_traj"],
-            })
-            print(f"{tau:>3} | {str(paired):>6} | {seed:>4} | "
-                  f"{r['fano']:>8.4f} | {r['mean_weight']:>6.3f} | "
-                  f"{r['detection_rate']:>6.3f} | {dt:>5.1f}")
-    elapsed = time.time() - t0
-    print(f"  --- tau={tau} done ({elapsed:.0f}s elapsed) ---")
+    for tau in TAU_VALUES:
+        for paired in [True, False]:
+            for seed in SEEDS:
+                t1 = time.time()
+                r = run_config(cell, nm, base_assignment, tau, paired,
+                               n_traj=SHOTS_PER_CONFIG, base_seed=seed,
+                               coherent_noise=COHERENT_NOISE)
+                dt = time.time() - t1
+                rows.append({
+                    "tau": tau, "paired": int(paired), "seed": seed,
+                    "fano": r["fano"], "mean_weight": r["mean_weight"],
+                    "detection": r["detection_rate"], "n_traj": r["n_traj"],
+                })
+                print(f"{tau:>3} | {str(paired):>6} | {seed:>4} | "
+                      f"{r['fano']:>8.4f} | {r['mean_weight']:>6.3f} | "
+                      f"{r['detection_rate']:>6.3f} | {dt:>5.1f}")
+        elapsed = time.time() - t0
+        print(f"  --- tau={tau} done ({elapsed:.0f}s elapsed) ---")
 
-# Write CSV
-os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
-with open(OUT_CSV, "w", newline="") as f:
-    w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-    w.writeheader()
-    w.writerows(rows)
-print(f"\nWrote {len(rows)} rows to {os.path.normpath(OUT_CSV)}")
+    # Write CSV
+    os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
+    with open(OUT_CSV, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
+    print(f"\nWrote {len(rows)} rows to {os.path.normpath(OUT_CSV)}")
 
-# Summary table vs hardware
-print()
-print("=" * 92)
-print("LINDBLAD TRIANGLE MC vs HARDWARE")
-print("=" * 92)
-print(f"{'tau':>3} | {'F_paired (mu+/-sigma)':>22} | {'F_control (mu+/-sigma)':>22} | "
-      f"{'DeltaF (sim)':>14} | {'DeltaF (HW)':>11} | sign match")
-print("-" * 92)
+    # Summary table vs hardware
+    print()
+    print("=" * 92)
+    print("LINDBLAD TRIANGLE MC vs HARDWARE")
+    print("=" * 92)
+    print(f"{'tau':>3} | {'F_paired (mu+/-sigma)':>22} | {'F_control (mu+/-sigma)':>22} | "
+          f"{'DeltaF (sim)':>14} | {'DeltaF (HW)':>11} | sign match")
+    print("-" * 92)
 
-for tau in TAU_VALUES:
-    p_vals = [row["fano"] for row in rows if row["tau"] == tau and row["paired"] == 1]
-    c_vals = [row["fano"] for row in rows if row["tau"] == tau and row["paired"] == 0]
-    p_mean, p_std = float(np.mean(p_vals)), float(np.std(p_vals, ddof=1))
-    c_mean, c_std = float(np.mean(c_vals)), float(np.std(c_vals, ddof=1))
-    delta = p_mean - c_mean
-    hw = HARDWARE.get(tau)
-    if hw:
-        hw_delta = hw["paired"] - hw["control"]
-        sim_sign = "+" if delta > 0 else "-"
-        hw_sign  = "+" if hw_delta > 0 else "-"
-        match = "yes" if sim_sign == hw_sign else "NO"
-        print(f"{tau:>3} | {p_mean:>10.4f} +/- {p_std:>6.4f}    | "
-              f"{c_mean:>10.4f} +/- {c_std:>6.4f}    | "
-              f"{delta:>+8.4f}      | {hw_delta:>+8.3f}   | {match:>10}")
-    else:
-        print(f"{tau:>3} | {p_mean:>10.4f} +/- {p_std:>6.4f}    | "
-              f"{c_mean:>10.4f} +/- {c_std:>6.4f}    | "
-              f"{delta:>+8.4f}      | {'(no HW)':>11}   | {'-':>10}")
+    for tau in TAU_VALUES:
+        p_vals = [row["fano"] for row in rows if row["tau"] == tau and row["paired"] == 1]
+        c_vals = [row["fano"] for row in rows if row["tau"] == tau and row["paired"] == 0]
+        p_mean, p_std = float(np.mean(p_vals)), float(np.std(p_vals, ddof=1))
+        c_mean, c_std = float(np.mean(c_vals)), float(np.std(c_vals, ddof=1))
+        delta = p_mean - c_mean
+        hw = HARDWARE.get(tau)
+        if hw:
+            hw_delta = hw["paired"] - hw["control"]
+            sim_sign = "+" if delta > 0 else "-"
+            hw_sign  = "+" if hw_delta > 0 else "-"
+            match = "yes" if sim_sign == hw_sign else "NO"
+            print(f"{tau:>3} | {p_mean:>10.4f} +/- {p_std:>6.4f}    | "
+                  f"{c_mean:>10.4f} +/- {c_std:>6.4f}    | "
+                  f"{delta:>+8.4f}      | {hw_delta:>+8.3f}   | {match:>10}")
+        else:
+            print(f"{tau:>3} | {p_mean:>10.4f} +/- {p_std:>6.4f}    | "
+                  f"{c_mean:>10.4f} +/- {c_std:>6.4f}    | "
+                  f"{delta:>+8.4f}      | {'(no HW)':>11}   | {'-':>10}")
 
-print()
-print(f"Total time: {time.time() - t0:.0f}s")
+    print()
+    print(f"Total time: {time.time() - t0:.0f}s")
